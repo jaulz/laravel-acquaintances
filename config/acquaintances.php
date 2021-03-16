@@ -4,9 +4,26 @@ return [
     /*
      * Models Related.
      */
-    'model_namespace' => 'App',
-    'user_model_class_name' => 'User',
-
+    'model_namespace' => 'App\Models',
+    'models' => [
+        /*
+         * Model name of User model
+         */
+        'user' => 'User',
+        /*
+         * Model name of Interaction Relation model
+         */
+        'interaction_relation' => \Multicaret\Acquaintances\Models\InteractionRelation::class,
+        /*
+         * Model name of Interaction Relation model
+         */
+        'friendship' => \Multicaret\Acquaintances\Models\Friendship::class,
+        /*
+         * Model name of Interaction Relation model
+         */
+        'friendship_groups' => \Multicaret\Acquaintances\Models\FriendFriendshipGroups::class,
+    ],
+    
     'tables' => [
         /*
          * Table name of interactions relations.
