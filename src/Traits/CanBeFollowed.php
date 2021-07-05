@@ -35,19 +35,4 @@ trait CanBeFollowed
                     ->wherePivot('relation', '=', Interaction::RELATION_FOLLOW)
                     ->withPivot(...Interaction::$pivotColumns);
     }
-
-    public function followersCount()
-    {
-        return $this->followers()->count();
-    }
-
-    public function getFollowersCountAttribute()
-    {
-        return $this->followersCount();
-    }
-
-    public function followersCountReadable($precision = 1, $divisors = null)
-    {
-        return Interaction::numberToReadable($this->followersCount(), $precision, $divisors);
-    }
 }

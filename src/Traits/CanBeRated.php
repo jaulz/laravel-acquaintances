@@ -205,45 +205,4 @@ trait CanBeRated
 
         return ($quantity * $max) > 0 ? $total / (($quantity * $max) / 100) : 0;
     }
-
-    public function getAverageRatingAttribute()
-    {
-        return $this->averageRating();
-    }
-
-    public function getAverageRatingAllTypesAttribute()
-    {
-        return $this->averageRatingAllTypes();
-    }
-
-    public function getSumRatingAttribute()
-    {
-        return $this->sumRating();
-    }
-
-    public function getSumRatingAllTypesAttribute()
-    {
-        return $this->sumRatingAllTypes();
-    }
-
-    public function getUserAverageRatingAttribute()
-    {
-        return $this->userAverageRating();
-    }
-
-    public function getUserAverageRatingAllTypesAttribute()
-    {
-        return $this->userAverageRatingAllTypes();
-    }
-
-    public function getUserSumRatingAttribute()
-    {
-        return $this->userSumRating();
-    }
-
-    public function getUserSumRatingAllTypesAttribute()
-    {
-        return $this->userSumRatingAllTypes();
-    }
-
 }

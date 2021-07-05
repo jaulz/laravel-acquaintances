@@ -34,19 +34,4 @@ trait CanBeSubscribed
                     ->wherePivot('relation', '=', Interaction::RELATION_SUBSCRIBE)
                     ->withPivot(...Interaction::$pivotColumns);
     }
-
-    public function subscribersCount()
-    {
-        return $this->subscribers()->count();
-    }
-
-    public function getSubscribersCountAttribute()
-    {
-        return $this->subscribersCount();
-    }
-
-    public function subscribersCountReadable($precision = 1, $divisors = null)
-    {
-        return Interaction::numberToReadable($this->subscribersCount(), $precision, $divisors);
-    }
 }

@@ -35,19 +35,4 @@ trait CanBeFavorited
                     ->wherePivot('relation', '=', Interaction::RELATION_FAVORITE)
                     ->withPivot(...Interaction::$pivotColumns);
     }
-
-    public function favoritersCount()
-    {
-        return $this->favoriters()->count();
-    }
-
-    public function getFavoritersCountAttribute()
-    {
-        return $this->favoritersCount();
-    }
-
-    public function favoritersCountReadable($precision = 1, $divisors = null)
-    {
-        return Interaction::numberToReadable($this->favoritersCount(), $precision, $divisors);
-    }
 }
