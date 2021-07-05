@@ -1,9 +1,9 @@
 <?php
 
-namespace Multicaret\Acquaintances\Traits;
+namespace Jaulz\Acquaintances\Traits;
 
 use Illuminate\Support\Facades\Event;
-use Multicaret\Acquaintances\Interaction;
+use Jaulz\Acquaintances\Interaction;
 use App\Http\Resources\Partial\InteractionRelationEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;

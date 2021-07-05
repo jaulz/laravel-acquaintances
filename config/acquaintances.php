@@ -13,15 +13,15 @@ return [
         /*
          * Model name of Interaction Relation model
          */
-        'interaction_relation' => \Multicaret\Acquaintances\Models\InteractionRelation::class,
+        'interaction_relation' => \Jaulz\Acquaintances\Models\InteractionRelation::class,
         /*
          * Model name of Interaction Relation model
          */
-        'friendship' => \Multicaret\Acquaintances\Models\Friendship::class,
+        'friendship' => \Jaulz\Acquaintances\Models\Friendship::class,
         /*
          * Model name of Interaction Relation model
          */
-        'friendship_groups' => \Multicaret\Acquaintances\Models\FriendFriendshipGroups::class,
+        'friendship_groups' => \Jaulz\Acquaintances\Models\FriendFriendshipGroups::class,
     ],
     
     'tables' => [

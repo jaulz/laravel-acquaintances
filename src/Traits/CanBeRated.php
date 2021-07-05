@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Multicaret\Acquaintances\Traits;
+namespace Jaulz\Acquaintances\Traits;
 
-use Multicaret\Acquaintances\Interaction;
-use Multicaret\Acquaintances\Models\InteractionRelation;
+use Jaulz\Acquaintances\Interaction;
+use Jaulz\Acquaintances\Models\InteractionRelation;
 
 /**
  * Trait CanBeLiked.

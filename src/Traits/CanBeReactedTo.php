@@ -1,9 +1,9 @@
 <?php
 
-namespace Multicaret\Acquaintances\Traits;
+namespace Jaulz\Acquaintances\Traits;
 
 use Illuminate\Support\Facades\DB;
-use Multicaret\Acquaintances\Interaction;
+use Jaulz\Acquaintances\Interaction;
 
 trait CanBeReactedTo
 {

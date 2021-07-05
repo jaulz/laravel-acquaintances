@@ -1,10 +1,10 @@
 # Laravel Acquaintances
 
-[![Total Downloads](https://img.shields.io/packagist/dt/multicaret/laravel-acquaintances.svg?style=flat-square)](https://packagist.org/packages/multicaret/laravel-acquaintances)
-[![Latest Version](https://img.shields.io/github/release/multicaret/laravel-acquaintances.svg?style=flat-square)](https://github.com/multicaret/laravel-acquaintances/releases)
-[![License](https://poser.pugx.org/multicaret/laravel-acquaintances/license.svg?style=flat-square)](https://packagist.org/packages/multicaret/laravel-acquaintances)
+[![Total Downloads](https://img.shields.io/packagist/dt/Jaulz/laravel-acquaintances.svg?style=flat-square)](https://packagist.org/packages/Jaulz/laravel-acquaintances)
+[![Latest Version](https://img.shields.io/github/release/Jaulz/laravel-acquaintances.svg?style=flat-square)](https://github.com/Jaulz/laravel-acquaintances/releases)
+[![License](https://poser.pugx.org/Jaulz/laravel-acquaintances/license.svg?style=flat-square)](https://packagist.org/packages/Jaulz/laravel-acquaintances)
 
-<p align="center"><img src="https://cdn.multicaret.com/packages/assets/img/laravel-acquaintances.svg?updated=2"></p>
+<p align="center"><img src="https://cdn.Jaulz.com/packages/assets/img/laravel-acquaintances.svg?updated=2"></p>
 
 [Laravel News Article](https://laravel-news.com/manage-friendships-likes-and-more-with-the-acquaintances-laravel-package)
 
@@ -85,7 +85,7 @@ easily design your social-like System (Facebook, Twitter, Foursquare...etc).
 First, install the package through Composer.
 
 ```sh
-$ composer require multicaret/laravel-acquaintances
+$ composer require Jaulz/laravel-acquaintances
 ```
 
 Laravel 5.8 and up => version 2.x (branch master)
@@ -99,7 +99,7 @@ Then include the service provider inside `config/app.php`.
 ```php
 'providers' => [
 //    ...
-    Multicaret\Acquaintances\AcquaintancesServiceProvider::class,
+    Jaulz\Acquaintances\AcquaintancesServiceProvider::class,
 //    ...
 ];
 ```
@@ -107,7 +107,7 @@ Then include the service provider inside `config/app.php`.
 Publish config and migrations:
 
 ```sh
-$ php artisan vendor:publish --provider="Multicaret\Acquaintances\AcquaintancesServiceProvider"
+$ php artisan vendor:publish --provider="Jaulz\Acquaintances\AcquaintancesServiceProvider"
 ```
 
 Configure the published config in:
@@ -129,13 +129,13 @@ $ php artisan migrate
 Example:
 
 ```php
-use Multicaret\Acquaintances\Traits\Friendable;
-use Multicaret\Acquaintances\Traits\CanFollow;
-use Multicaret\Acquaintances\Traits\CanBeFollowed;
-use Multicaret\Acquaintances\Traits\CanLike;
-use Multicaret\Acquaintances\Traits\CanBeLiked;
-use Multicaret\Acquaintances\Traits\CanRate;
-use Multicaret\Acquaintances\Traits\CanBeRated;
+use Jaulz\Acquaintances\Traits\Friendable;
+use Jaulz\Acquaintances\Traits\CanFollow;
+use Jaulz\Acquaintances\Traits\CanBeFollowed;
+use Jaulz\Acquaintances\Traits\CanLike;
+use Jaulz\Acquaintances\Traits\CanBeLiked;
+use Jaulz\Acquaintances\Traits\CanRate;
+use Jaulz\Acquaintances\Traits\CanBeRated;
 //...
 
 class User extends Model
@@ -160,7 +160,7 @@ All available APIs are listed below for Friendships & Interactions.
 Add `Friendable` Trait to User model.
 
 ```php
-use Multicaret\Acquaintances\Traits\Friendable;
+use Jaulz\Acquaintances\Traits\Friendable;
 
 class User extends Model
 {
@@ -410,11 +410,11 @@ $user->getPendingFriendships($group_name);
 Add `CanXXX` Traits to User model.
 
 ```php
-use Multicaret\Acquaintances\Traits\CanFollow;
-use Multicaret\Acquaintances\Traits\CanLike;
-use Multicaret\Acquaintances\Traits\CanFavorite;
-use Multicaret\Acquaintances\Traits\CanSubscribe;
-use Multicaret\Acquaintances\Traits\CanVote;
+use Jaulz\Acquaintances\Traits\CanFollow;
+use Jaulz\Acquaintances\Traits\CanLike;
+use Jaulz\Acquaintances\Traits\CanFavorite;
+use Jaulz\Acquaintances\Traits\CanSubscribe;
+use Jaulz\Acquaintances\Traits\CanVote;
 
 class User extends Model
 {
@@ -425,10 +425,10 @@ class User extends Model
 Add `CanBeXXX` Trait to target model, such as 'Post' or 'Book' ...:
 
 ```php
-use Multicaret\Acquaintances\Traits\CanBeLiked;
-use Multicaret\Acquaintances\Traits\CanBeFavorited;
-use Multicaret\Acquaintances\Traits\CanBeVoted;
-use Multicaret\Acquaintances\Traits\CanBeRated;
+use Jaulz\Acquaintances\Traits\CanBeLiked;
+use Jaulz\Acquaintances\Traits\CanBeFavorited;
+use Jaulz\Acquaintances\Traits\CanBeVoted;
+use Jaulz\Acquaintances\Traits\CanBeRated;
 
 class Post extends Model
 {
@@ -440,7 +440,7 @@ All available APIs are listed below.
 
 ### Follow
 
-#### `\Multicaret\Acquaintances\Traits\CanFollow`
+#### `\Jaulz\Acquaintances\Traits\CanFollow`
 
 ```php
 $user->follow($targets);
@@ -451,7 +451,7 @@ $user->followings(App\Post::class)->get();
 $user->isFollowing($target);
 ```
 
-#### `\Multicaret\Acquaintances\Traits\CanBeFollowed`
+#### `\Jaulz\Acquaintances\Traits\CanBeFollowed`
 
 ```php
 $object->followers()->get();
@@ -462,7 +462,7 @@ $object->followersCountReadable(); // return readable number with precision, i.e
 
 ### Rate
 
-#### `\Multicaret\Acquaintances\Traits\CanRate`
+#### `\Jaulz\Acquaintances\Traits\CanRate`
 
 ```php
 $user->rate($targets);
@@ -473,7 +473,7 @@ $user->rateings(App\Post::class)->get();
 $user->hasRated($target);
 ```
 
-#### `\Multicaret\Acquaintances\Traits\CanBeRated`
+#### `\Jaulz\Acquaintances\Traits\CanBeRated`
 
 ```php
 $object->raters()->get();
@@ -506,7 +506,7 @@ $object->userSumRatingAllTypesReadable(); // return readable number with precisi
 
 ### Like
 
-#### `\Multicaret\Acquaintances\Traits\CanLike`
+#### `\Jaulz\Acquaintances\Traits\CanLike`
 
 ```php
 $user->like($targets);
@@ -517,7 +517,7 @@ $user->likes()->get(); // default object: App\User:class
 $user->likes(App\Post::class)->get();
 ```
 
-#### `\Multicaret\Acquaintances\Traits\CanBeLiked`
+#### `\Jaulz\Acquaintances\Traits\CanBeLiked`
 
 ```php
 $object->likers()->get();
@@ -529,7 +529,7 @@ $object->likersCountReadable(); // return readable number with precision, i.e: 5
 
 ### Favorite
 
-#### `\Multicaret\Acquaintances\Traits\CanFavorite`
+#### `\Jaulz\Acquaintances\Traits\CanFavorite`
 
 ```php
 $user->favorite($targets);
@@ -540,7 +540,7 @@ $user->favorites()->get(); // App\User:class
 $user->favorites(App\Post::class)->get();
 ```
 
-#### `\Multicaret\Acquaintances\Traits\CanBeFavorited`
+#### `\Jaulz\Acquaintances\Traits\CanBeFavorited`
 
 ```php
 $object->favoriters()->get(); // or $object->favoriters 
@@ -551,7 +551,7 @@ $object->favoritersCountReadable(); // return readable number with precision, i.
 
 ### Subscribe
 
-#### `\Multicaret\Acquaintances\Traits\CanSubscribe`
+#### `\Jaulz\Acquaintances\Traits\CanSubscribe`
 
 ```php
 $user->subscribe($targets);
@@ -562,7 +562,7 @@ $user->subscriptions()->get(); // default object: App\User:class
 $user->subscriptions(App\Post::class)->get();
 ```
 
-#### `Multicaret\Acquaintances\Traits\CanBeSubscribed`
+#### `Jaulz\Acquaintances\Traits\CanBeSubscribed`
 
 ```php
 $object->subscribers(); // or $object->subscribers 
@@ -573,7 +573,7 @@ $object->subscribersCountReadable(); // return readable number with precision, i
 
 ### Vote
 
-#### `\Multicaret\Acquaintances\Traits\CanVote`
+#### `\Jaulz\Acquaintances\Traits\CanVote`
 
 ```php
 $user->vote($target); // Vote with 'upvote' for default
@@ -587,7 +587,7 @@ $user->upvotes(App\Post::class)->get();
 $user->downvotes(App\Post::class)->get();
 ```
 
-#### `\Multicaret\Acquaintances\Traits\CanBeVoted`
+#### `\Jaulz\Acquaintances\Traits\CanBeVoted`
 
 ```php
 $object->voters()->get();
@@ -646,7 +646,7 @@ You may use the others in the same way.
 ### Working with model
 
 ```php
-use Multicaret\Acquaintances\Models\InteractionRelation;
+use Jaulz\Acquaintances\Models\InteractionRelation;
 
 // Get most popular object
 // 1- All types

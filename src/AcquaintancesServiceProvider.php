@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Multicaret\Acquaintances;
+namespace Jaulz\Acquaintances;
 
 use Illuminate\Support\ServiceProvider;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Multicaret\Acquaintances;
+namespace Jaulz\Acquaintances;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;

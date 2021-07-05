@@ -1,6 +1,6 @@
 <?php
 
-namespace Multicaret\Acquaintances;
+namespace Jaulz\Acquaintances;
 
 /**
  * Class Status.

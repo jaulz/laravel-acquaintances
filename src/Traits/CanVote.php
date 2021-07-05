@@ -1,11 +1,11 @@
 <?php
 
 
-namespace Multicaret\Acquaintances\Traits;
+namespace Jaulz\Acquaintances\Traits;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Multicaret\Acquaintances\Interaction;
+use Jaulz\Acquaintances\Interaction;
 
 /**
  * Trait CanVote.
@@ -70,7 +70,7 @@ trait CanVote
      * @param  int|array|\Illuminate\Database\Eloquent\Model  $targets
      * @param  string  $class
      *
-     * @return Multicaret\Acquaintances\Traits\CanVote
+     * @return Jaulz\Acquaintances\Traits\CanVote
      */
     public function cancelVote($targets, $class = __CLASS__)
     {

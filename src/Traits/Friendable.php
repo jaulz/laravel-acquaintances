@@ -1,24 +1,24 @@
 <?php
 
 
-namespace Multicaret\Acquaintances\Traits;
+namespace Jaulz\Acquaintances\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Event;
-use Multicaret\Acquaintances\Models\FriendFriendshipGroups;
-use Multicaret\Acquaintances\Models\Friendship;
-use Multicaret\Acquaintances\Status;
+use Jaulz\Acquaintances\Models\FriendFriendshipGroups;
+use Jaulz\Acquaintances\Models\Friendship;
+use Jaulz\Acquaintances\Status;
 
 /**
  * Class Friendable
- * @package Multicaret\Acquaintances\Traits
+ * @package Jaulz\Acquaintances\Traits
  */
 trait Friendable
 {
     /**
      * @param  Model  $recipient
      *
-     * @return \Multicaret\Acquaintances\Models\Friendship|false
+     * @return \Jaulz\Acquaintances\Models\Friendship|false
      */
     public function befriend(Model $recipient)
     {
@@ -172,7 +172,7 @@ trait Friendable
     /**
      * @param  Model  $recipient
      *
-     * @return \Multicaret\Acquaintances\Models\Friendship
+     * @return \Jaulz\Acquaintances\Models\Friendship
      */
     public function blockFriend(Model $recipient)
     {
@@ -206,7 +206,7 @@ trait Friendable
     /**
      * @param  Model  $recipient
      *
-     * @return \Multicaret\Acquaintances\Models\Friendship
+     * @return \Jaulz\Acquaintances\Models\Friendship
      */
     public function getFriendship(Model $recipient)
     {

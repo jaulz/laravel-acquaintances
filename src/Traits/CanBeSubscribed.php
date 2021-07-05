@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Multicaret\Acquaintances\Traits;
+namespace Jaulz\Acquaintances\Traits;
 
-use Multicaret\Acquaintances\Interaction;
+use Jaulz\Acquaintances\Interaction;
 
 /**
  * Trait CanBeSubscribed.

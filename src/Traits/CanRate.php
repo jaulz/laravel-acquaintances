@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Multicaret\Acquaintances\Traits;
+namespace Jaulz\Acquaintances\Traits;
 
 use Illuminate\Support\Facades\Event;
-use Multicaret\Acquaintances\Interaction;
+use Jaulz\Acquaintances\Interaction;
 
 /**
  * Class CanRate
- * @package Multicaret\Acquaintances\Traits
+ * @package Jaulz\Acquaintances\Traits
  */
 trait CanRate
 {
