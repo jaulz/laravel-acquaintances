@@ -35,7 +35,7 @@ trait CanBeReactedTo
     return $this->hasMany(
       Interaction::getInteractionRelationModelName(),
       'subject_id'
-    )->where('relation', '=', RELATION_REACT);
+    )->where('relation', '=', Interaction::RELATION_REACT);
   }
 
   /**
