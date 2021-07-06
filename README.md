@@ -22,6 +22,7 @@ Gives eloquent models:
     - Subscribe
     - Follow
     - Ratings
+    - Views
 
 Take this example:
 
@@ -53,6 +54,7 @@ $user2->unfriend($user1);
     * [Favorite](#favorite)
     * [Subscribe](#subscribe)
     * [Vote](#vote)
+    * [View](#view)
     * [Parameters](#parameters)
     * [Query relations](#query-relations)
     * [Working with model](#working-with-model)
@@ -77,6 +79,7 @@ easily design your social-like System (Facebook, Twitter, Foursquare...etc).
 - Subscribe a User or a Model
 - Favorite a User or a Model
 - Vote (Upvote & Downvote a User or a Model)
+- View a User or a Model
 
 ---
 
@@ -88,22 +91,6 @@ First, install the package through Composer.
 $ composer require Jaulz/laravel-acquaintances
 ```
 
-Laravel 5.8 and up => version 2.x (branch master)
-
-Laravel 5.7 and below => version 1.x (branch v1)
-
-#### Laravel 5.4 and down
-
-Then include the service provider inside `config/app.php`.
-
-```php
-'providers' => [
-//    ...
-    Jaulz\Acquaintances\AcquaintancesServiceProvider::class,
-//    ...
-];
-```
-
 Publish config and migrations:
 
 ```sh
@@ -113,7 +100,7 @@ $ php artisan vendor:publish --provider="Jaulz\Acquaintances\AcquaintancesServic
 Configure the published config in:
 
 ```
-config\acquaintances.php
+config/acquaintances.php
 ```
 
 Finally, migrate the database to create the table:
@@ -465,12 +452,27 @@ $object->followersCountReadable(); // return readable number with precision, i.e
 #### `\Jaulz\Acquaintances\Traits\CanRate`
 
 ```php
+// Rate type in the following line will be
+// the same as the one specified
+// in config('acquaintances.rating.defaults.type')
+// if your app is using a single type of rating on your model,
+// like one factor only, then simply use the rate() as it's shown here,
+// and if you have multiple factors then
+// take a look the examples exactly below this these ones. 
 $user->rate($targets);
 $user->unrate($targets);
 $user->toggleRate($targets);
 $user->ratings()->get(); // App\User:class
-$user->rateings(App\Post::class)->get();
+$user->ratings(App\Post::class)->get();
 $user->hasRated($target);
+
+// Some Examples on how to rate the object based on different factors (rating type)
+$user->setRateType('bedside-manners')->rate($target, 4);
+$user->setRateType('waiting-time')->rate($target, 3);
+$user->setRateType('quality')->rate($target, 4);
+$user->setRateType('delivery-time')->rate($target, 2);
+$user->setRateType('communication')->rate($target, 5);
+// Remember that you can always use the functions on $target which have this phrase "AllTypes" in them. check the below section for more details
 ```
 
 #### `\Jaulz\Acquaintances\Traits\CanBeRated`
@@ -606,6 +608,28 @@ $object->downvotersCount(); // or as attribute $object->downvoters_count
 $object->downvotersCountReadable(); // return readable number with precision, i.e: 5.2K
 ```
 
+### View
+
+#### `\Multicaret\Acquaintances\Traits\CanView`
+
+```php
+$user->view($targets);
+$user->unview($targets);
+$user->toggleView($targets);
+$user->hasViewed($target);
+$user->viewers()->get(); // default object: App\User:class
+$user->viewers(App\Post::class)->get();
+```
+
+#### `\Multicaret\Acquaintances\Traits\CanBeViewed`
+
+```php
+$object->viewers()->get();
+$object->isViewedBy($user);
+$object->viewersCount(); // or as attribute $object->viewers_count
+$object->viewersCountReadable(); // return readable number with precision, i.e: 5.2K
+```
+
 ### Parameters
 
 All the above mentioned methods of creating relationships, such as 'follow', 'like', 'unfollow', 'unlike', their syntax
@@ -690,7 +714,9 @@ This is the list of the events fired by default for each action:
 |acq.favorites.favorite         |When a an item or items get favored            |
 |acq.favorites.unfavorite       |When a an item or items get unfavored          |
 |acq.subscriptions.subscribe    |When a an item or items get subscribed         |                 
-|acq.subscriptions.unsubscribe  |When a an item or items get unsubscribed       |                 
+|acq.subscriptions.unsubscribe  |When a an item or items get unsubscribed       | 
+|acq.views.view                 |When a an item or items get viewed             |
+|acq.views.unview               |When a an item or items get unviewed           |                
 
 ### Contributing
 

@@ -29,9 +29,10 @@ trait CanBeSubscribed
      */
     public function subscribers()
     {
-        return $this->morphToMany(config('auth.providers.users.model'), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_SUBSCRIBE)
-                    ->withPivot(...Interaction::$pivotColumns);
+                    ->withPivot(...Interaction::$pivotColumns)
+                    ->using(Interaction::getInteractionRelationModelName());
     }
 }

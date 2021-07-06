@@ -3,15 +3,16 @@
 
 namespace Jaulz\Acquaintances\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Multicaret\Acquaintances\Interaction;
+use Illuminate\Support\Str;
 
 /**
  * Class InteractionRelation.
  */
-class InteractionRelation extends Model
+class InteractionRelation extends MorphPivot
 {
     /**
      * @var string
@@ -36,12 +37,7 @@ class InteractionRelation extends Model
      */
     public function user()
     {
-        $namespace = config('acquaintances.model_namespace', 'App');
-        $userClassName = config('acquaintances.user_model_class_name', 'User');
-
-        $modelName = $namespace.'\\'.Str::studly($userClassName);
-
-        return $this->belongsTo($modelName);
+        return $this->belongsTo(Interaction::getUserModelName());
     }
 
     /**
@@ -104,7 +100,7 @@ class InteractionRelation extends Model
 
         $namespace = config('acquaintances.model_namespace', 'App');
 
-        $modelName = $namespace.'\\'.studly_case($type);
+        $modelName = $namespace.'\\'.Str::studly($type);
 
         if ( ! class_exists($modelName)) {
             throw new InvalidArgumentException("Model {$modelName} not exists. Please check your config 'acquaintances.model_namespace'.");

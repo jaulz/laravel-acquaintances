@@ -1,10 +1,17 @@
 <?php
 
 return [
+    /**
+     * Load migrations from package migrations,
+     * If you published the migration files, please set to `false`.
+     */
+    'migrations' => false,
+
     /*
      * Models Related.
      */
-    'model_namespace' => 'App\Models',
+    'model_namespace' => (int) app()->version() <= 7 ? 'App' : 'App\Models',
+    
     'models' => [
         /*
          * Model name of User model
@@ -23,14 +30,18 @@ return [
          */
         'friendship_groups' => \Jaulz\Acquaintances\Models\FriendFriendshipGroups::class,
     ],
-    
+
     'tables' => [
         /*
          * Table name of interactions relations.
          */
         'interactions' => 'interactions',
         /*
-         * `user_id` foreign key column type within interactions table.
+         * user foreign key column name within interactions table.
+         */
+        'interactions_user_id_fk_column_name' => 'user_id',
+        /*
+         * user foreign key column type within interactions table.
          */
         'interactions_user_id_fk_column_type' => 'unsignedBigInteger',
         /*

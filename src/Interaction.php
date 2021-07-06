@@ -3,6 +3,7 @@
 namespace Jaulz\Acquaintances;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use stdClass;
 
@@ -19,8 +20,10 @@ class Interaction
     const RELATION_DOWNVOTE = 'downvote';
     const RELATION_RATE = 'rate';
     const RELATION_REACT = 'react';
+    const RELATION_VIEW = 'view';
 
     public static $pivotColumns = [
+        'id',
         'subject_type',
         'relation',
         'relation_value',
@@ -46,6 +49,8 @@ class Interaction
         'downvoters' => 'downvote',
         'ratings' => 'rate',
         'raters' => 'rate',
+        'views' => 'view',
+        'viewers' => 'view',
     ];
 
     /**
@@ -187,5 +192,58 @@ class Interaction
         }
 
         return self::$relationMap[$relation->getRelationName()];
+    }
+
+    public static function getFullModelName($modelClassName)
+    {
+        if (class_exists($modelClassName)) {
+            return Str::studly($modelClassName);
+        }
+
+        $namespace = config('acquaintances.model_namespace', 'App');
+
+        return empty($namespace)
+            ? Str::studly($modelClassName)
+            : $namespace . '\\' . Str::studly($modelClassName);
+    }
+
+    public static function getUserModelName()
+    {
+        return Interaction::getFullModelName(
+            config(
+                'acquaintances.user_model_class_name',
+                config('acquaintances.models.user', 'User')
+            )
+        );
+    }
+
+    public static function getInteractionRelationModelName()
+    {
+        return Interaction::getFullModelName(
+            config(
+                'acquaintances.models.interaction_relation',
+                \Multicaret\Acquaintances\Models\InteractionRelation::class
+            )
+        );
+    }
+
+    public static function getFriendshipModelName()
+    {
+        return Interaction::getFullModelName(
+            config(
+                'acquaintances.models.friendship',
+                \Multicaret\Acquaintances\Models\Friendship::class
+            )
+        );
+    }
+
+    public static function getFriendshipGroupsModelName()
+    {
+        return Interaction::getFullModelName(
+            config(
+                'acquaintances.models.friendship_groups',
+                \Multicaret\Acquaintances\Models\FriendshipGroups::class
+            )
+        );
     }
 }

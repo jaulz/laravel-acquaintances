@@ -58,10 +58,13 @@ trait CanRate
     {
         Event::dispatch('acq.ratings.rate', [$this, $targets]);
 
-        return Interaction::attachRelations($this, 'ratings', $targets, $class, [
+        $attachRelations = Interaction::attachRelations($this, 'ratingsTo', $targets, $class, [
             'relation_value' => $amount,
             'relation_type' => $this->rateType($ratingType),
         ]);
+        self::$rateType = config('acquaintances.rating.defaults.type');
+
+        return $attachRelations;
     }
 
     /**
@@ -78,7 +81,7 @@ trait CanRate
     {
         Event::dispatch('acq.ratings.unrate', [$this, $targets]);
 
-        return Interaction::detachRelations($this, 'ratings', $targets, $class, [
+        return Interaction::detachRelations($this, 'ratingsTo', $targets, $class, [
             'relation_type' => $this->rateType($ratingType),
         ]);
     }
@@ -97,7 +100,7 @@ trait CanRate
      */
     public function toggleRate($targets, float $amount, $ratingType = null, $class = __CLASS__)
     {
-        return Interaction::toggleRelations($this, 'ratings', $targets, $class, [
+        return Interaction::toggleRelations($this, 'ratingsTo', $targets, $class, [
             'relation_value' => $amount,
             'relation_type' => $this->rateType($ratingType),
         ]);
@@ -114,7 +117,7 @@ trait CanRate
      */
     public function hasRated($target, $ratingType = null, $class = __CLASS__)
     {
-        return Interaction::isRelationExists($this, 'ratings', $target, $class, [
+        return Interaction::isRelationExists($this, 'ratingsTo', $target, $class, [
             'relation_type' => $this->rateType($ratingType),
         ]);
     }
@@ -127,11 +130,12 @@ trait CanRate
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function ratings($class = __CLASS__)
+    public function ratingsTo($class = __CLASS__)
     {
         $relation = $this->morphedByMany($class, 'subject',
             config('acquaintances.tables.interactions'))
-                         ->wherePivot('relation', '=', Interaction::RELATION_RATE);
+                         ->wherePivot('relation', '=', Interaction::RELATION_RATE)
+                         ->using(Interaction::getInteractionRelationModelName());
 
         $relation = $relation->wherePivot('relation_type', '=', $this->rateType());
 

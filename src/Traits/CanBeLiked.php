@@ -29,9 +29,10 @@ trait CanBeLiked
      */
     public function likers()
     {
-        return $this->morphToMany(config('auth.providers.users.model'), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_LIKE)
-                    ->withPivot(...Interaction::$pivotColumns);
+                    ->withPivot(...Interaction::$pivotColumns)
+                    ->using(Interaction::getInteractionRelationModelName());
     }
 }

@@ -4,10 +4,9 @@
 namespace Jaulz\Acquaintances\Traits;
 
 use Jaulz\Acquaintances\Interaction;
-use Jaulz\Acquaintances\Models\InteractionRelation;
 
 /**
- * Trait CanBeLiked.
+ * Trait CanBeRated.
  */
 trait CanBeRated
 {
@@ -62,9 +61,10 @@ trait CanBeRated
      */
     public function raters($isAllTypes = false)
     {
-        $relation = $this->morphToMany(config('auth.providers.users.model'), 'subject',
+        $relation = $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
-                         ->wherePivot('relation', '=', Interaction::RELATION_RATE);
+                         ->wherePivot('relation', '=', Interaction::RELATION_RATE)
+                         ->using(Interaction::getInteractionRelationModelName());
 
         if ( ! $isAllTypes) {
             $relation = $relation->wherePivot('relation_type', '=', $this->ratedType());
@@ -74,24 +74,13 @@ trait CanBeRated
     }
 
     /**
-     * Return ratings as interaction items with lazy loading `user` relation
-     * for a specific type or for the default type.
+     * Return ratings as interaction items.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function ratings()
     {
-        return $this->hasMany(InteractionRelation::class, 'subject_id')->with('user');
-    }
-
-    /**
-     * Return ratings as interaction items without lazy loading `user` relation
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function ratingsPure()
-    {
-        return $this->hasMany(InteractionRelation::class, 'subject_id');
+        return $this->hasMany(Interaction::getInteractionRelationModelName(), 'subject_id');
     }
 
     public function averageRating($ratingType = null)
@@ -191,7 +180,6 @@ trait CanBeRated
      *
      * @param  null  $max
      *
-     * @param  null  $ratingType
      *
      * @return float|int
      */

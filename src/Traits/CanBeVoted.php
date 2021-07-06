@@ -53,10 +53,11 @@ trait CanBeVoted
      */
     public function voters()
     {
-        return $this->morphToMany(config('auth.providers.users.model'), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
                     ->wherePivotIn('relation', [Interaction::RELATION_UPVOTE, Interaction::RELATION_DOWNVOTE])
-                    ->withPivot(...Interaction::$pivotColumns);
+                    ->withPivot(...Interaction::$pivotColumns)
+                    ->using(Interaction::getInteractionRelationModelName());
     }
 
     /**
@@ -66,10 +67,11 @@ trait CanBeVoted
      */
     public function upvoters()
     {
-        return $this->morphToMany(config('auth.providers.users.model'), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_UPVOTE)
-                    ->withPivot(...Interaction::$pivotColumns);
+                    ->withPivot(...Interaction::$pivotColumns)
+                    ->using(Interaction::getInteractionRelationModelName());
     }
 
     /**
@@ -79,9 +81,10 @@ trait CanBeVoted
      */
     public function downvoters()
     {
-        return $this->morphToMany(config('auth.providers.users.model'), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_DOWNVOTE)
-                    ->withPivot(...Interaction::$pivotColumns);
+                    ->withPivot(...Interaction::$pivotColumns)
+                    ->using(Interaction::getInteractionRelationModelName());
     }
 }
