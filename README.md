@@ -610,7 +610,7 @@ $object->downvotersCountReadable(); // return readable number with precision, i.
 
 ### View
 
-#### `\Multicaret\Acquaintances\Traits\CanView`
+#### `\Jaulz\Acquaintances\Traits\CanView`
 
 ```php
 $user->view($targets);
@@ -621,7 +621,7 @@ $user->viewers()->get(); // default object: App\User:class
 $user->viewers(App\Post::class)->get();
 ```
 
-#### `\Multicaret\Acquaintances\Traits\CanBeViewed`
+#### `\Jaulz\Acquaintances\Traits\CanBeViewed`
 
 ```php
 $object->viewers()->get();

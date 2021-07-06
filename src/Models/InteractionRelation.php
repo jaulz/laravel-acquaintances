@@ -6,7 +6,7 @@ namespace Jaulz\Acquaintances\Models;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use InvalidArgumentException;
-use Multicaret\Acquaintances\Interaction;
+use Jaulz\Acquaintances\Interaction;
 use Illuminate\Support\Str;
 
 /**

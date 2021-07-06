@@ -222,7 +222,7 @@ class Interaction
         return Interaction::getFullModelName(
             config(
                 'acquaintances.models.interaction_relation',
-                \Multicaret\Acquaintances\Models\InteractionRelation::class
+                \Jaulz\Acquaintances\Models\InteractionRelation::class
             )
         );
     }
@@ -232,7 +232,7 @@ class Interaction
         return Interaction::getFullModelName(
             config(
                 'acquaintances.models.friendship',
-                \Multicaret\Acquaintances\Models\Friendship::class
+                \Jaulz\Acquaintances\Models\Friendship::class
             )
         );
     }
@@ -242,7 +242,7 @@ class Interaction
         return Interaction::getFullModelName(
             config(
                 'acquaintances.models.friendship_groups',
-                \Multicaret\Acquaintances\Models\FriendshipGroups::class
+                \Jaulz\Acquaintances\Models\FriendshipGroups::class
             )
         );
     }
