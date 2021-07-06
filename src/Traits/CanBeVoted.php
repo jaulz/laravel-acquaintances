@@ -91,9 +91,10 @@ trait CanBeVoted
     /**
      * Return vote of specific user.
      *
+     * @param  any  $userId
      * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */
-    public function voteBy(any $userId)
+    public function voteBy($userId)
     {
         return $this->morphOne(Interaction::getInteractionRelationModelName(), 'subject')
                 ->ofMany(['id' => 'max'], function ($query) use ($userId) {

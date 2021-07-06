@@ -41,9 +41,10 @@ trait CanBeReactedTo
   /**
    * Return reaction of specific user.
    *
+   * @param  any  $userId
    * @return \Illuminate\Database\Eloquent\Relations\MorphOne
    */
-  public function reactionBy(any $userId)
+  public function reactionBy($userId)
   {
     return $this->morphOne(
       Interaction::getInteractionRelationModelName(),
