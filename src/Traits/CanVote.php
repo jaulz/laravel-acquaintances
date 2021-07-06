@@ -154,4 +154,38 @@ trait CanVote
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
+
+    /**
+     * Toggle vote on object.
+     *
+     * @param  Model  $subject
+     * @param  string  $voteType
+     *
+     * @return array
+     */
+    public function toggleVote(Model $subject, string $voteType)
+    {
+      // Toggle vote in transaction
+      $vote = null;
+      DB::transaction(function () use ($subject, $type, $vote) {
+        $vote = $subject->voteBy($this->getKey())->first();
+  
+        // Explicitly delete vote because cancelVote uses "detach" internally
+        // which does not trigger delete events on models
+        $toggled = false;
+        if ($ownVote) {
+          $vote->delete();
+          $toggled = strval($ownVote->relation) === $voteType;
+        }
+  
+        if (!$toggled) {
+          $vote = $this->{$voteType}($this);
+        }
+      });
+  
+      // Reload
+      $subject->refresh();
+  
+      return $this;
+    }
 }

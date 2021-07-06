@@ -39,6 +39,23 @@ trait CanBeReactedTo
   }
 
   /**
+   * Return reaction of specific user.
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+   */
+  public function reactionBy(any $userId)
+  {
+    return $this->morphOne(
+      Interaction::getInteractionRelationModelName(),
+      'subject'
+    )->ofMany(['id' => 'max'], function ($query) use ($userId) {
+      $query
+        ->where('relation', Interaction::RELATION_REACT)
+        ->where(config('acquaintances.tables.interactions_user_id_fk_column_name'), $userId);
+    });
+  }
+
+  /**
    * Return reaction counts.
    *
    * @return \Illuminate\Database\Eloquent\Relations\HasMany

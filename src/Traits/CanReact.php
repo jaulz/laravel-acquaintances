@@ -89,29 +89,28 @@ trait CanReact
    * Toggle reaction on subject.
    *
    * @param  Model  $subject
-   * @param  string  $reaction
+   * @param  string  $reactionType
    *
    * @return array
    */
-  public function toggleReaction(Model $subject, string $reaction)
+  public function toggleReaction(Model $subject, string $reactionType)
   {
-    // Toggle vote in transaction
-    $ownReaction = null;
-    DB::transaction(function () use ($subject, $reaction) {
-      $ownReaction = $subject->ownReaction()->first();
+    $reaction = null;
+    DB::transaction(function () use ($subject, $reaction, $reactionType) {
+      $reaction = $subject->reactionBy($this->getKey())->first();
 
       $toggled = false;
-      if ($ownReaction && $ownReaction->relation_type === $reaction) {
-        $ownReaction->delete();
+      if ($reaction && $reaction->relation_type === $reactionType) {
+        $reaction->delete();
         $toggled = true;
       }
 
       if (!$toggled) {
-        $ownReaction = $this->react($subject, $reaction);
+        $reaction = $this->react($subject, $reactionType);
       }
     });
 
-    // Reload vote
+    // Reload
     $subject->refresh();
 
     return $this;

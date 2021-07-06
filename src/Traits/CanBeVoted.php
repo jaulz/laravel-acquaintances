@@ -87,4 +87,19 @@ trait CanBeVoted
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
+
+    /**
+     * Return vote of specific user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function voteBy(any $userId)
+    {
+        return $this->morphOne(Interaction::getInteractionRelationModelName(), 'subject')
+                ->ofMany(['id' => 'max'], function ($query) use ($userId) {
+                    $query
+                        ->where('relation', [Interaction::RELATION_UPVOTE, Interaction::RELATION_DOWNVOTE])
+                         ->where(config('acquaintances.tables.interactions_user_id_fk_column_name'), $userId);
+                  });
+    }
 }
