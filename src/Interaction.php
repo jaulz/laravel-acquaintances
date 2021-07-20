@@ -51,6 +51,7 @@ class Interaction
         'raters' => 'rate',
         'views' => 'view',
         'viewers' => 'view',
+        'reactions' => 'react',
     ];
 
     /**
