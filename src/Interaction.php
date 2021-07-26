@@ -51,7 +51,7 @@ class Interaction
         'raters' => Interaction::RELATION_RATE,
         'views' => Interaction::RELATION_VIEW,
         'viewers' => Interaction::RELATION_VIEW,
-        'reactions' => Interaction::RELATION_REACTION,
+        'reactions' => Interaction::RELATION_REACT,
     ];
 
     /**
