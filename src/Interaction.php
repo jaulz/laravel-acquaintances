@@ -14,12 +14,12 @@ class Interaction
 {
     const RELATION_LIKE = 'like';
     const RELATION_FOLLOW = 'follow';
-    const RELATION_SUBSCRIBE = 'subscribe';
+    const RELATION_SUBSCRIBE = 'subscription';
     const RELATION_FAVORITE = 'favorite';
     const RELATION_UPVOTE = 'upvote';
     const RELATION_DOWNVOTE = 'downvote';
-    const RELATION_RATE = 'rate';
-    const RELATION_REACT = 'react';
+    const RELATION_RATE = 'rating';
+    const RELATION_REACT = 'reaction';
     const RELATION_VIEW = 'view';
 
     public static $pivotColumns = [
@@ -35,23 +35,23 @@ class Interaction
      * @var array
      */
     protected static $relationMap = [
-        'followings' => 'follow',
-        'followers' => 'follow',
-        'likes' => 'like',
-        'likers' => 'like',
-        'favoriters' => 'favorite',
-        'favorites' => 'favorite',
-        'subscriptions' => 'subscribe',
-        'subscribers' => 'subscribe',
-        'upvotes' => 'upvote',
-        'upvoters' => 'upvote',
-        'downvotes' => 'downvote',
-        'downvoters' => 'downvote',
-        'ratings' => 'rate',
-        'raters' => 'rate',
-        'views' => 'view',
-        'viewers' => 'view',
-        'reactions' => 'reaction',
+        'followings' => Interaction::RELATION_FOLLOW,
+        'followers' => Interaction::RELATION_FOLLOW,
+        'likes' =>  Interaction::RELATION_LIKE,
+        'likers' => Interaction::RELATION_LIKE,
+        'favoriters' => Interaction::RELATION_FAVORITE,
+        'favorites' => Interaction::RELATION_FAVORITE,
+        'subscriptions' => Interaction::RELATION_SUBSCRIBE,
+        'subscribers' => Interaction::RELATION_SUBSCRIBE,
+        'upvotes' => Interaction::RELATION_UPVOTE,
+        'upvoters' => Interaction::RELATION_UPVOTE,
+        'downvotes' => Interaction::RELATION_DOWNVOTE,
+        'downvoters' => Interaction::RELATION_DOWNVOTE,
+        'ratings' => Interaction::RELATION_RATE,
+        'raters' => Interaction::RELATION_RATE,
+        'views' => Interaction::RELATION_VIEW,
+        'viewers' => Interaction::RELATION_VIEW,
+        'reactions' => Interaction::RELATION_REACTION,
     ];
 
     /**
