@@ -183,9 +183,6 @@ trait CanVote
         }
       });
   
-      // Reload
-      $subject->refresh();
-  
       return $this;
     }
 }

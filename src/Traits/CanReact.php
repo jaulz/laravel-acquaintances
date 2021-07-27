@@ -110,9 +110,6 @@ trait CanReact
       }
     });
 
-    // Reload
-    $subject->refresh();
-
     return $this;
   }
 }
