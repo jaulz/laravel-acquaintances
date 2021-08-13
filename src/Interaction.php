@@ -35,14 +35,22 @@ class Interaction
      * @var array
      */
     protected static $relationMap = [
-        'follows' => Interaction::RELATION_FOLLOW,
+        'followings' => Interaction::RELATION_FOLLOW,
+        'followers' => Interaction::RELATION_FOLLOW,
         'likes' =>  Interaction::RELATION_LIKE,
+        'likers' => Interaction::RELATION_LIKE,
+        'favoriters' => Interaction::RELATION_FAVORITE,
         'favorites' => Interaction::RELATION_FAVORITE,
         'subscriptions' => Interaction::RELATION_SUBSCRIBE,
+        'subscribers' => Interaction::RELATION_SUBSCRIBE,
         'upvotes' => Interaction::RELATION_UPVOTE,
+        'upvoters' => Interaction::RELATION_UPVOTE,
         'downvotes' => Interaction::RELATION_DOWNVOTE,
+        'downvoters' => Interaction::RELATION_DOWNVOTE,
         'ratings' => Interaction::RELATION_RATE,
+        'raters' => Interaction::RELATION_RATE,
         'views' => Interaction::RELATION_VIEW,
+        'viewers' => Interaction::RELATION_VIEW,
         'reactions' => Interaction::RELATION_REACT,
     ];
 

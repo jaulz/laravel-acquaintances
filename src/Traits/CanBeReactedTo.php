@@ -26,7 +26,7 @@ trait CanBeReactedTo
   }
 
   /**
-   * Return ratings as interaction items.
+   * Return reactions as interaction items.
    *
    * @return \Illuminate\Database\Eloquent\Relations\HasMany
    */
