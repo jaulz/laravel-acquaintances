@@ -6,6 +6,8 @@ namespace Jaulz\Acquaintances\Traits;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Jaulz\Acquaintances\Interaction;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Trait CanVote.
@@ -167,15 +169,15 @@ trait CanVote
     {
       // Toggle vote in transaction
       $vote = null;
-      DB::transaction(function () use ($subject, $type, $vote) {
+      DB::transaction(function () use ($subject, $voteType, $vote) {
         $vote = $subject->voteBy($this->getKey())->first();
   
         // Explicitly delete vote because cancelVote uses "detach" internally
         // which does not trigger delete events on models
         $toggled = false;
-        if ($ownVote) {
+        if ($vote) {
           $vote->delete();
-          $toggled = strval($ownVote->relation) === $voteType;
+          $toggled = strval($vote->relation) === $voteType;
         }
   
         if (!$toggled) {

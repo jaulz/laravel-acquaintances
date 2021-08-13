@@ -3,6 +3,7 @@
 
 namespace Jaulz\Acquaintances\Traits;
 
+use Illuminate\Support\Facades\DB;
 use Jaulz\Acquaintances\Interaction;
 
 /**
@@ -102,5 +103,22 @@ trait CanBeVoted
                         ->where('relation', [Interaction::RELATION_UPVOTE, Interaction::RELATION_DOWNVOTE])
                          ->where(config('acquaintances.tables.interactions_user_id_fk_column_name'), $userId);
                   });
+    }
+
+    /**
+     * Return vote counts.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function voteCounts()
+    {
+      return $this->reactions()
+        ->select(
+          'subject_id',
+          'relation',
+          'relation_type',
+          DB::raw('COUNT(*) as count')
+        )
+        ->groupBy('relation', 'relation_type', 'subject_id');
     }
 }
