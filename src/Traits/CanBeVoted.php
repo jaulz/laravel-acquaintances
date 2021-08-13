@@ -48,11 +48,11 @@ trait CanBeVoted
     }
 
     /**
-     * Return voters.
+     * Return votes.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function voters()
+    public function votes()
     {
         return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
@@ -62,11 +62,11 @@ trait CanBeVoted
     }
 
     /**
-     * Return upvoters.
+     * Return upvotes.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function upvoters()
+    public function upvotes()
     {
         return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
@@ -76,11 +76,11 @@ trait CanBeVoted
     }
 
     /**
-     * Return downvoters.
+     * Return downvotes.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function downvoters()
+    public function downvotes()
     {
         return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
@@ -112,7 +112,7 @@ trait CanBeVoted
      */
     public function voteCounts()
     {
-      return $this->reactions()
+      return $this->votes()
         ->select(
           'subject_id',
           'relation',
