@@ -30,7 +30,7 @@ trait CanVote
     {
         $this->cancelVote($targets);
 
-        return Interaction::attachRelations($this, Interaction::RELATION_VOTE, $targets, $class, ['type' => $type, 'value' => $value]);
+        return Interaction::attachRelations($this, 'votes', $targets, $class, ['type' => $type, 'value' => $value]);
     }
 
     /**
