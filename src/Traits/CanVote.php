@@ -96,7 +96,7 @@ trait CanVote
     {
         return $this->morphedByMany($class, 'subject',
             config('acquaintances.tables.interactions'))
-                    ->wherePivotIn('relation', Interaction::RELATION_VOTE)
+                    ->wherePivot('relation', Interaction::RELATION_VOTE)
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
