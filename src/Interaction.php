@@ -26,8 +26,8 @@ class Interaction
         'id',
         'subject_type',
         'relation',
-        'relation_value',
-        'relation_type',
+        'value',
+        'type',
         'created_at'
     ];
 

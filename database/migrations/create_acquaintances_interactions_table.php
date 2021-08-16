@@ -19,9 +19,9 @@ class CreateAcquaintancesInteractionsTable extends Migration
             $userIdFkType = config('acquaintances.tables.interactions_user_id_fk_column_type');
             $table->{$userIdFkType}('user_id')->index();
             $table->morphs('subject');
-            $table->string('relation')->default('follow')->comment('follow/like/subscribe/favorite/upvote/downvote');
-            $table->double('relation_value')->nullable();
-            $table->string('relation_type')->nullable();
+            $table->string('relation')->default('follow')->comment('follow/like/subscribe/favorite/upvote/downvote/reaction');
+            $table->double('value')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
 
 

@@ -26,7 +26,7 @@ trait CanReact
     Event::dispatch('acq.ratings.react', [$this, $targets]);
 
     return Interaction::attachRelations($this, 'reactions', $targets, $class, [
-      'relation_type' => $reaction,
+      'type' => $reaction,
     ]);
   }
 
@@ -100,7 +100,7 @@ trait CanReact
       $reaction = $subject->reactionBy($this->getKey())->first();
 
       $toggled = false;
-      if ($reaction && $reaction->relation_type === $reactionType) {
+      if ($reaction && $reaction->type === $reactionType) {
         $reaction->delete();
         $toggled = true;
       }

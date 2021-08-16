@@ -67,7 +67,7 @@ trait CanBeRated
                          ->using(Interaction::getInteractionRelationModelName());
 
         if ( ! $isAllTypes) {
-            $relation = $relation->wherePivot('relation_type', '=', $this->ratedType());
+            $relation = $relation->wherePivot('type', '=', $this->ratedType());
         }
 
         return $relation->withPivot(...Interaction::$pivotColumns);
@@ -87,24 +87,24 @@ trait CanBeRated
     {
         $this->ratedType($ratingType);
 
-        return $this->raters()->avg('relation_value');
+        return $this->raters()->avg('value');
     }
 
     public function averageRatingAllTypes()
     {
-        return $this->raters(true)->avg('relation_value');
+        return $this->raters(true)->avg('value');
     }
 
     public function sumRating($ratingType = null)
     {
         $this->ratedType($ratingType);
 
-        return $this->raters()->sum('relation_value');
+        return $this->raters()->sum('value');
     }
 
     public function sumRatingAllTypes()
     {
-        return $this->raters(true)->sum('relation_value');
+        return $this->raters(true)->sum('value');
     }
 
     public function sumRatingReadable($ratingType = null, $precision = 1, $divisors = null)
@@ -121,24 +121,24 @@ trait CanBeRated
     {
         $this->ratedType($ratingType);
 
-        return $this->raters()->where('user_id', \Auth::id())->avg('relation_value');
+        return $this->raters()->where('user_id', \Auth::id())->avg('value');
     }
 
     public function userAverageRatingAllTypes()
     {
-        return $this->raters(true)->where('user_id', \Auth::id())->avg('relation_value');
+        return $this->raters(true)->where('user_id', \Auth::id())->avg('value');
     }
 
     public function userSumRating($ratingType = null)
     {
         $this->ratedType($ratingType);
 
-        return $this->raters()->where('user_id', \Auth::id())->sum('relation_value');
+        return $this->raters()->where('user_id', \Auth::id())->sum('value');
     }
 
     public function userSumRatingAllTypes()
     {
-        return $this->raters(true)->where('user_id', \Auth::id())->sum('relation_value');
+        return $this->raters(true)->where('user_id', \Auth::id())->sum('value');
     }
 
     public function userSumRatingReadable($ratingType = null, $precision = 1, $divisors = null)

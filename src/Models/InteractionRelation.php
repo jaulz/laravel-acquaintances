@@ -22,7 +22,7 @@ class InteractionRelation extends MorphPivot
     /**
      * @var array
      */
-    protected $with = ['subject'];
+    protected $with = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo

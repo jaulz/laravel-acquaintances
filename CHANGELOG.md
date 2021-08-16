@@ -1,6 +1,6 @@
 ## v3.5.4
 
-* fix: make interaction relation_value type a double, better for rating values.
+* fix: make interaction value type a double, better for rating values.
 * fix: rating a non-custom type (AKA `config('acquaintances.rating.defaults.type')`) just after a custom type rating,
   will leave to an odd behavior
 

@@ -129,9 +129,9 @@ trait CanBeVoted
         ->select(
           'subject_id',
           'relation',
-          'relation_type',
+          'type',
           DB::raw('COUNT(*) as count')
         )
-        ->groupBy('relation', 'relation_type', 'subject_id');
+        ->groupBy('relation', 'type', 'subject_id');
     }
 }

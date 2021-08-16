@@ -59,8 +59,8 @@ trait CanRate
         Event::dispatch('acq.ratings.rate', [$this, $targets]);
 
         $attachRelations = Interaction::attachRelations($this, 'ratingsTo', $targets, $class, [
-            'relation_value' => $amount,
-            'relation_type' => $this->rateType($ratingType),
+            'value' => $amount,
+            'type' => $this->rateType($ratingType),
         ]);
         self::$rateType = config('acquaintances.rating.defaults.type');
 
@@ -82,7 +82,7 @@ trait CanRate
         Event::dispatch('acq.ratings.unrate', [$this, $targets]);
 
         return Interaction::detachRelations($this, 'ratingsTo', $targets, $class, [
-            'relation_type' => $this->rateType($ratingType),
+            'type' => $this->rateType($ratingType),
         ]);
     }
 
@@ -101,8 +101,8 @@ trait CanRate
     public function toggleRate($targets, float $amount, $ratingType = null, $class = __CLASS__)
     {
         return Interaction::toggleRelations($this, 'ratingsTo', $targets, $class, [
-            'relation_value' => $amount,
-            'relation_type' => $this->rateType($ratingType),
+            'value' => $amount,
+            'type' => $this->rateType($ratingType),
         ]);
     }
 
@@ -118,7 +118,7 @@ trait CanRate
     public function hasRated($target, $ratingType = null, $class = __CLASS__)
     {
         return Interaction::isRelationExists($this, 'ratingsTo', $target, $class, [
-            'relation_type' => $this->rateType($ratingType),
+            'type' => $this->rateType($ratingType),
         ]);
     }
 
@@ -137,7 +137,7 @@ trait CanRate
                          ->wherePivot('relation', '=', Interaction::RELATION_RATE)
                          ->using(Interaction::getInteractionRelationModelName());
 
-        $relation = $relation->wherePivot('relation_type', '=', $this->rateType());
+        $relation = $relation->wherePivot('type', '=', $this->rateType());
 
         return $relation->withPivot(...Interaction::$pivotColumns);
     }
