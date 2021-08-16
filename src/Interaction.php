@@ -16,8 +16,7 @@ class Interaction
     const RELATION_FOLLOW = 'follow';
     const RELATION_SUBSCRIBE = 'subscription';
     const RELATION_FAVORITE = 'favorite';
-    const RELATION_UPVOTE = 'upvote';
-    const RELATION_DOWNVOTE = 'downvote';
+    const RELATION_VOTE = 'vote';
     const RELATION_RATE = 'rating';
     const RELATION_REACT = 'reaction';
     const RELATION_VIEW = 'view';
@@ -43,10 +42,8 @@ class Interaction
         'favorites' => Interaction::RELATION_FAVORITE,
         'subscriptions' => Interaction::RELATION_SUBSCRIBE,
         'subscribers' => Interaction::RELATION_SUBSCRIBE,
-        'upvotes' => Interaction::RELATION_UPVOTE,
-        'upvoters' => Interaction::RELATION_UPVOTE,
-        'downvotes' => Interaction::RELATION_DOWNVOTE,
-        'downvoters' => Interaction::RELATION_DOWNVOTE,
+        'votes' => Interaction::RELATION_VOTE,
+        'voters' => Interaction::RELATION_VOTE,
         'ratings' => Interaction::RELATION_RATE,
         'raters' => Interaction::RELATION_RATE,
         'views' => Interaction::RELATION_VIEW,
@@ -123,7 +120,6 @@ class Interaction
     {
         $targets = self::attachPivotsFromRelation($model->{$relation}(), $targets, $class, $updates);
 
-//        dd($relation, $targets);
         return $model->{$relation}($targets->classname)->toggle($targets->targets);
     }
 

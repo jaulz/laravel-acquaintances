@@ -19,51 +19,54 @@ trait CanVote
      *
      * @param  int|array|\Illuminate\Database\Eloquent\Model  $targets
      * @param  string  $type
+     * @param  int  $value
      * @param  string  $class
      *
      * @return array
      *
      * @throws \Exception
      */
-    public function vote($targets, $type = 'upvote', $class = __CLASS__)
+    public function vote($targets, $type = 'up', $value = 1, $class = __CLASS__)
     {
         $this->cancelVote($targets);
 
-        return Interaction::attachRelations($this, Str::plural($type), $targets, $class);
+        return Interaction::attachRelations($this, Interaction::RELATION_VOTE, $targets, $class, ['type' => $type, 'value' => $value]);
     }
 
     /**
      * Upvote an item or items.
      *
      * @param  int|array|\Illuminate\Database\Eloquent\Model  $targets
+     * @param  int  $value
      * @param  string  $class
      *
      * @return array
      *
      * @throws \Exception
      */
-    public function upvote($targets, $class = __CLASS__)
+    public function upvote($targets, $value = 1, $class = __CLASS__)
     {
         Event::dispatch('acq.vote.up', [$this, $targets]);
 
-        return $this->vote($targets, 'upvote', $class);
+        return $this->vote($targets, 'up', $value, $class);
     }
 
     /**
      * Downvote an item or items.
      *
      * @param  int|array|\Illuminate\Database\Eloquent\Model  $targets
+     * @param  int  $value
      * @param  string  $class
      *
      * @return array
      *
      * @throws \Exception
      */
-    public function downvote($targets, $class = __CLASS__)
+    public function downvote($targets, $value = 1, $class = __CLASS__)
     {
         Event::dispatch('acq.vote.down', [$this, $targets]);
 
-        return $this->vote($targets, 'downvote', $class);
+        return $this->vote($targets, 'down', $value, $class);
     }
 
     /**
@@ -76,37 +79,10 @@ trait CanVote
      */
     public function cancelVote($targets, $class = __CLASS__)
     {
-        Interaction::detachRelations($this, 'upvotes', $targets, $class);
-        Interaction::detachRelations($this, 'downvotes', $targets, $class);
+        Interaction::detachRelations($this, 'votes', $targets, $class);
         Event::dispatch('acq.vote.cancel', [$this, $targets]);
 
         return $this;
-    }
-
-    /**
-     * Check if a model is upvoted a given model.
-     *
-     * @param  int|array|\Illuminate\Database\Eloquent\Model  $target
-     * @param  string  $class
-     *
-     * @return bool
-     */
-    public function hasUpvoted($target, $class = __CLASS__)
-    {
-        return Interaction::isRelationExists($this, 'upvotes', $target, $class);
-    }
-
-    /**
-     * Check if user is downvoted given item.
-     *
-     * @param  int|array|\Illuminate\Database\Eloquent\Model  $target
-     * @param  string  $class
-     *
-     * @return bool
-     */
-    public function hasDownvoted($target, $class = __CLASS__)
-    {
-        return Interaction::isRelationExists($this, 'downvotes', $target, $class);
     }
 
     /**
@@ -120,7 +96,7 @@ trait CanVote
     {
         return $this->morphedByMany($class, 'subject',
             config('acquaintances.tables.interactions'))
-                    ->wherePivotIn('relation', [Interaction::RELATION_UPVOTE, Interaction::RELATION_DOWNVOTE])
+                    ->wherePivotIn('relation', Interaction::RELATION_VOTE)
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
@@ -136,7 +112,8 @@ trait CanVote
     {
         return $this->morphedByMany($class, 'subject',
             config('acquaintances.tables.interactions'))
-                    ->wherePivot('relation', '=', Interaction::RELATION_UPVOTE)
+                    ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
+                    ->wherePivot('type', '=', 'up')
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
@@ -152,7 +129,8 @@ trait CanVote
     {
         return $this->morphedByMany($class, 'subject',
             config('acquaintances.tables.interactions'))
-                    ->wherePivot('relation', '=', Interaction::RELATION_DOWNVOTE)
+                    ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
+                    ->wherePivot('type', '=', 'down')
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
@@ -165,11 +143,11 @@ trait CanVote
      *
      * @return array
      */
-    public function toggleVote(Model $subject, string $voteType)
+    public function toggleVote(Model $subject, $type = 'up', $value = 1)
     {
       // Toggle vote in transaction
       $vote = null;
-      DB::transaction(function () use ($subject, $voteType, $vote) {
+      DB::transaction(function () use ($subject, $type, $vote) {
         $vote = $subject->voteBy($this->getKey())->first();
   
         // Explicitly delete vote because cancelVote uses "detach" internally
@@ -177,11 +155,11 @@ trait CanVote
         $toggled = false;
         if ($vote) {
           $vote->delete();
-          $toggled = strval($vote->relation) === $voteType;
+          $toggled = strval($vote->type) === $type;
         }
   
         if (!$toggled) {
-          $vote = $this->{$voteType}($this);
+          $vote = $this->vote($this);
         }
       });
   

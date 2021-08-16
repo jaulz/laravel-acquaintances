@@ -24,30 +24,6 @@ trait CanBeVoted
     }
 
     /**
-     * Check if item is upvoted by given user.
-     *
-     * @param  int|array|\Illuminate\Database\Eloquent\Model  $user
-     *
-     * @return bool
-     */
-    public function isUpvotedBy($user)
-    {
-        return Interaction::isRelationExists($this, 'upvoters', $user);
-    }
-
-    /**
-     * Check if item is downvoted by given user.
-     *
-     * @param  int|array|\Illuminate\Database\Eloquent\Model  $user
-     *
-     * @return bool
-     */
-    public function isDownvotedBy($user)
-    {
-        return Interaction::isRelationExists($this, 'downvoters', $user);
-    }
-
-    /**
      * Return voters.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -56,7 +32,7 @@ trait CanBeVoted
     {
         return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
-                    ->wherePivotIn('relation', [Interaction::RELATION_UPVOTE, Interaction::RELATION_DOWNVOTE])
+                    ->wherePivot('relation', Interaction::RELATION_VOTE)
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
@@ -71,7 +47,7 @@ trait CanBeVoted
       return $this->hasMany(
         Interaction::getInteractionRelationModelName(),
         'subject_id'
-      )->where('relation', '=', [Interaction::RELATION_UPVOTE, Interaction::RELATION_DOWNVOTE]);
+      )->where('relation', '=', Interaction::RELATION_VOTE);
     }
 
     /**
@@ -83,7 +59,9 @@ trait CanBeVoted
     {
         return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
-                    ->wherePivot('relation', '=', Interaction::RELATION_UPVOTE)
+                    ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
+                    ->wherePivot('type', '=', 'up')
+                    ->wherePivot('value', '>', 0)
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
@@ -97,7 +75,9 @@ trait CanBeVoted
     {
         return $this->morphToMany(Interaction::getUserModelName(), 'subject',
             config('acquaintances.tables.interactions'))
-                    ->wherePivot('relation', '=', Interaction::RELATION_DOWNVOTE)
+                    ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
+                    ->wherePivot('type', '=', 'down')
+                    ->wherePivot('value', '<', 0)
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
@@ -113,7 +93,7 @@ trait CanBeVoted
         return $this->morphOne(Interaction::getInteractionRelationModelName(), 'subject')
                 ->ofMany(['id' => 'max'], function ($query) use ($userId) {
                     $query
-                        ->where('relation', [Interaction::RELATION_UPVOTE, Interaction::RELATION_DOWNVOTE])
+                        ->where('relation', Interaction::RELATION_VOTE)
                          ->where(config('acquaintances.tables.interactions_user_id_fk_column_name'), $userId);
                   });
     }
@@ -131,6 +111,23 @@ trait CanBeVoted
           'relation',
           'type',
           DB::raw('COUNT(*) as count')
+        )
+        ->groupBy('relation', 'type', 'subject_id');
+    }
+
+    /**
+     * Return vote sums.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function voteSums()
+    {
+      return $this->votes()
+        ->select(
+          'subject_id',
+          'relation',
+          'type',
+          DB::raw('SUM(value) as sum')
         )
         ->groupBy('relation', 'type', 'subject_id');
     }
