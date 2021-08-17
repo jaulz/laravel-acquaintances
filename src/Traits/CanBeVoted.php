@@ -61,7 +61,6 @@ trait CanBeVoted
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
                     ->wherePivot('type', '=', 'up')
-                    ->wherePivot('value', '>', 0)
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }
@@ -77,7 +76,6 @@ trait CanBeVoted
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
                     ->wherePivot('type', '=', 'down')
-                    ->wherePivot('value', '<', 0)
                     ->withPivot(...Interaction::$pivotColumns)
                     ->using(Interaction::getInteractionRelationModelName());
     }

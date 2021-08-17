@@ -147,7 +147,7 @@ trait CanVote
     {
       // Toggle vote in transaction
       $vote = null;
-      DB::transaction(function () use ($subject, $type, $vote) {
+      DB::transaction(function () use ($subject, $type, $value, $vote) {
         $vote = $subject->voteBy($this->getKey())->first();
   
         // Explicitly delete vote because cancelVote uses "detach" internally
@@ -159,7 +159,7 @@ trait CanVote
         }
   
         if (!$toggled) {
-          $vote = $this->vote($this);
+          $vote = $this->vote($subject, $type, $value);
         }
       });
   
