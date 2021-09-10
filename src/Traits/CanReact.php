@@ -4,7 +4,6 @@ namespace Jaulz\Acquaintances\Traits;
 
 use Illuminate\Support\Facades\Event;
 use Jaulz\Acquaintances\Interaction;
-use App\Http\Resources\Partial\InteractionRelationEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -71,7 +70,7 @@ trait CanReact
    *
    * @param  string  $class
    *
-   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+   * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
    */
   public function reactions($class = __CLASS__)
   {

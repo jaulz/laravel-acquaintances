@@ -76,7 +76,7 @@ trait CanLike
      *
      * @param  string  $class
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function likes($class = __CLASS__)
     {

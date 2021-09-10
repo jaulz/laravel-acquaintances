@@ -57,7 +57,7 @@ trait CanBeRated
      * Return Raters.
      *
      * @param  bool  $isAllTypes
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function raters($isAllTypes = false)
     {

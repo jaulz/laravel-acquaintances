@@ -76,7 +76,7 @@ trait CanView
      *
      * @param  string  $class
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function views($class = __CLASS__)
     {

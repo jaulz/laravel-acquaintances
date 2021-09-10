@@ -90,7 +90,7 @@ trait CanVote
      *
      * @param  string  $class
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function votes($class = __CLASS__)
     {
@@ -106,7 +106,7 @@ trait CanVote
      *
      * @param  string  $class
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function upvotes($class = __CLASS__)
     {
@@ -123,7 +123,7 @@ trait CanVote
      *
      * @param  string  $class
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function downvotes($class = __CLASS__)
     {

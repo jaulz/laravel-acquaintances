@@ -72,7 +72,7 @@ trait CanFavorite
      *
      * @param  string  $class
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function favorites($class = __CLASS__)
     {

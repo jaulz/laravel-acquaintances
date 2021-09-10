@@ -128,7 +128,7 @@ trait CanRate
      *
      * @param  string  $class
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function ratingsTo($class = __CLASS__)
     {

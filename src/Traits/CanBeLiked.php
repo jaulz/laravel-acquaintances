@@ -25,7 +25,7 @@ trait CanBeLiked
     /**
      * Return followers.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function likers()
     {

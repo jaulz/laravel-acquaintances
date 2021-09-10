@@ -26,7 +26,7 @@ trait CanBeVoted
     /**
      * Return voters.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function voters()
     {
@@ -53,7 +53,7 @@ trait CanBeVoted
     /**
      * Return upvoters.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function upvoters()
     {
@@ -68,7 +68,7 @@ trait CanBeVoted
     /**
      * Return downvoters.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function downvoters()
     {

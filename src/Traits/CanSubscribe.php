@@ -76,7 +76,7 @@ trait CanSubscribe
      *
      * @param  string  $class
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
     public function subscriptions($class = __CLASS__)
     {

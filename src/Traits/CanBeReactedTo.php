@@ -10,7 +10,7 @@ trait CanBeReactedTo
   /**
    * Return reactors.
    *
-   * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+   * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
    */
   public function reactors()
   {
