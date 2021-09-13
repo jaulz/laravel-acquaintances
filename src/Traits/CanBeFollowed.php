@@ -30,7 +30,7 @@ trait CanBeFollowed
      */
     public function followers()
     {
-        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_FOLLOW)
                     ->withPivot(...Interaction::$pivotColumns)

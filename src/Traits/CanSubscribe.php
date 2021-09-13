@@ -80,7 +80,7 @@ trait CanSubscribe
      */
     public function subscriptions($class = __CLASS__)
     {
-        return $this->morphedByMany($class, 'subject',
+        return $this->morphedByMany($class, 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_SUBSCRIBE)
                     ->withPivot(...Interaction::$pivotColumns)

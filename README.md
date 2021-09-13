@@ -676,13 +676,13 @@ use Jaulz\Acquaintances\Models\InteractionRelation;
 // 1- All types
 $relations = InteractionRelation::popular()->get();
 
-// 2- subject_type = App\Post
+// 2- interactable_type = App\Post
 $relations = InteractionRelation::popular(App\Post::class)->get(); 
 
-// 3- subject_type = App\User
+// 3- interactable_type = App\User
 $relations = InteractionRelation::popular('user')->get();
  
-// 4- subject_type = App\Post
+// 4- interactable_type = App\Post
 $relations = InteractionRelation::popular('post')->get();
 
 // 5- Pagination

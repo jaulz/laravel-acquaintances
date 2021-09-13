@@ -30,7 +30,7 @@ trait CanBeVoted
      */
     public function voters()
     {
-        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', Interaction::RELATION_VOTE)
                     ->withPivot(...Interaction::$pivotColumns)
@@ -46,7 +46,7 @@ trait CanBeVoted
     {
       return $this->hasMany(
         Interaction::getInteractionRelationModelName(),
-        'subject_id'
+        'interactable_id'
       )->where('relation', '=', Interaction::RELATION_VOTE);
     }
 
@@ -57,7 +57,7 @@ trait CanBeVoted
      */
     public function upvoters()
     {
-        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
                     ->wherePivot('type', '=', 'up')
@@ -72,7 +72,7 @@ trait CanBeVoted
      */
     public function downvoters()
     {
-        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
                     ->wherePivot('type', '=', 'down')
@@ -88,7 +88,7 @@ trait CanBeVoted
      */
     public function voteBy($userId)
     {
-        return $this->morphOne(Interaction::getInteractionRelationModelName(), 'subject')
+        return $this->morphOne(Interaction::getInteractionRelationModelName(), 'interactable')
                 ->ofMany(['id' => 'max'], function ($query) use ($userId) {
                     $query
                         ->where('relation', Interaction::RELATION_VOTE)
@@ -105,12 +105,12 @@ trait CanBeVoted
     {
       return $this->votes()
         ->select(
-          'subject_id',
+          'interactable_id',
           'relation',
           'type',
           DB::raw('COUNT(*) as count')
         )
-        ->groupBy('relation', 'type', 'subject_id');
+        ->groupBy('relation', 'type', 'interactable_id');
     }
 
     /**
@@ -122,11 +122,11 @@ trait CanBeVoted
     {
       return $this->votes()
         ->select(
-          'subject_id',
+          'interactable_id',
           'relation',
           'type',
           DB::raw('SUM(value) as sum')
         )
-        ->groupBy('relation', 'type', 'subject_id');
+        ->groupBy('relation', 'type', 'interactable_id');
     }
 }

@@ -29,7 +29,7 @@ trait CanBeViewed
      */
     public function viewers()
     {
-        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_VIEW)
                     ->withPivot(...Interaction::$pivotColumns)

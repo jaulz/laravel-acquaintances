@@ -27,9 +27,9 @@ class InteractionRelation extends MorphPivot
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function subject()
+    public function interactable()
     {
-        return $this->morphTo('subject');
+        return $this->morphTo('interactable');
     }
 
     /**
@@ -48,12 +48,12 @@ class InteractionRelation extends MorphPivot
      */
     public function scopePopular($query, $type = null)
     {
-        $query->select('subject_id', 'subject_type', \DB::raw('COUNT(*) AS count'))
-              ->groupBy('subject_id', 'subject_type')
+        $query->select('interactable_id', 'interactable_type', \DB::raw('COUNT(*) AS count'))
+              ->groupBy('interactable_id', 'interactable_type')
               ->orderByDesc('count');
 
         if ($type) {
-            $query->where('subject_type', $this->normalizeSubjectType($type));
+            $query->where('interactable_type', $this->normalizeinteractableType($type));
         }
 
         return $query;
@@ -86,7 +86,7 @@ class InteractionRelation extends MorphPivot
      * @throws \InvalidArgumentException
      *
      */
-    protected function normalizeSubjectType($type)
+    protected function normalizeinteractableType($type)
     {
         $morphMap = Relation::morphMap();
 

@@ -16,7 +16,7 @@ trait CanBeReactedTo
   {
     $relation = $this->morphToMany(
       Interaction::getUserModelName(),
-      'subject',
+      'interactable',
       config('acquaintances.tables.interactions')
     )
       ->wherePivot('relation', '=', Interaction::RELATION_REACT)
@@ -34,7 +34,7 @@ trait CanBeReactedTo
   {
     return $this->hasMany(
       Interaction::getInteractionRelationModelName(),
-      'subject_id'
+      'interactable_id'
     )->where('relation', '=', Interaction::RELATION_REACT);
   }
 
@@ -48,7 +48,7 @@ trait CanBeReactedTo
   {
     return $this->morphOne(
       Interaction::getInteractionRelationModelName(),
-      'subject'
+      'interactable'
     )->ofMany(['id' => 'max'], function ($query) use ($userId) {
       $query
         ->where('relation', Interaction::RELATION_REACT)
@@ -65,11 +65,11 @@ trait CanBeReactedTo
   {
     return $this->reactions()
       ->select(
-        'subject_id',
+        'interactable_id',
         'relation',
         'type',
         DB::raw('COUNT(*) as count')
       )
-      ->groupBy('relation', 'type', 'subject_id');
+      ->groupBy('relation', 'type', 'interactable_id');
   }
 }

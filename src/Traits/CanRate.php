@@ -132,7 +132,7 @@ trait CanRate
      */
     public function ratingsTo($class = __CLASS__)
     {
-        $relation = $this->morphedByMany($class, 'subject',
+        $relation = $this->morphedByMany($class, 'interactable',
             config('acquaintances.tables.interactions'))
                          ->wherePivot('relation', '=', Interaction::RELATION_RATE)
                          ->using(Interaction::getInteractionRelationModelName());

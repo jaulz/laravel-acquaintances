@@ -76,7 +76,7 @@ trait CanReact
   {
     return $this->morphedByMany(
       $class,
-      'subject',
+      'interactable',
       config('acquaintances.tables.interactions')
     )
       ->wherePivot('relation', '=', Interaction::RELATION_REACT)
@@ -85,18 +85,18 @@ trait CanReact
   }
 
   /**
-   * Toggle reaction on subject.
+   * Toggle reaction on interactable.
    *
-   * @param  Model  $subject
+   * @param  Model  $interactable
    * @param  string  $reactionType
    *
    * @return array
    */
-  public function toggleReaction(Model $subject, string $reactionType)
+  public function toggleReaction(Model $interactable, string $reactionType)
   {
     $reaction = null;
-    DB::transaction(function () use ($subject, $reaction, $reactionType) {
-      $reaction = $subject->reactionBy($this->getKey())->first();
+    DB::transaction(function () use ($interactable, $reaction, $reactionType) {
+      $reaction = $interactable->reactionBy($this->getKey())->first();
 
       $toggled = false;
       if ($reaction && $reaction->type === $reactionType) {
@@ -105,7 +105,7 @@ trait CanReact
       }
 
       if (!$toggled) {
-        $reaction = $this->react($subject, $reactionType);
+        $reaction = $this->react($interactable, $reactionType);
       }
     });
 

@@ -80,7 +80,7 @@ trait CanFollow
      */
     public function followings($class = __CLASS__)
     {
-        return $this->morphedByMany($class, 'subject',
+        return $this->morphedByMany($class, 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_FOLLOW)
                     ->withPivot(...Interaction::$pivotColumns)

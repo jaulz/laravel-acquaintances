@@ -94,7 +94,7 @@ trait CanVote
      */
     public function votes($class = __CLASS__)
     {
-        return $this->morphedByMany($class, 'subject',
+        return $this->morphedByMany($class, 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', Interaction::RELATION_VOTE)
                     ->withPivot(...Interaction::$pivotColumns)
@@ -110,7 +110,7 @@ trait CanVote
      */
     public function upvotes($class = __CLASS__)
     {
-        return $this->morphedByMany($class, 'subject',
+        return $this->morphedByMany($class, 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
                     ->wherePivot('type', '=', 'up')
@@ -127,7 +127,7 @@ trait CanVote
      */
     public function downvotes($class = __CLASS__)
     {
-        return $this->morphedByMany($class, 'subject',
+        return $this->morphedByMany($class, 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_VOTE)
                     ->wherePivot('type', '=', 'down')
@@ -138,17 +138,17 @@ trait CanVote
     /**
      * Toggle vote on object.
      *
-     * @param  Model  $subject
+     * @param  Model  $interactable
      * @param  string  $voteType
      *
      * @return array
      */
-    public function toggleVote(Model $subject, $type = 'up', $value = 1)
+    public function toggleVote(Model $interactable, $type = 'up', $value = 1)
     {
       // Toggle vote in transaction
       $vote = null;
-      DB::transaction(function () use ($subject, $type, $value, $vote) {
-        $vote = $subject->voteBy($this->getKey())->first();
+      DB::transaction(function () use ($interactable, $type, $value, $vote) {
+        $vote = $interactable->voteBy($this->getKey())->first();
   
         // Explicitly delete vote because cancelVote uses "detach" internally
         // which does not trigger delete events on models
@@ -159,7 +159,7 @@ trait CanVote
         }
   
         if (!$toggled) {
-          $vote = $this->vote($subject, $type, $value);
+          $vote = $this->vote($interactable, $type, $value);
         }
       });
   

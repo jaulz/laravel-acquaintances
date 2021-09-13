@@ -23,7 +23,7 @@ class Interaction
 
     public static $pivotColumns = [
         'id',
-        'subject_type',
+        'interactable_type',
         'relation',
         'value',
         'type',
@@ -66,7 +66,7 @@ class Interaction
         $target = self::formatTargets($target, $class ?: config('auth.providers.users.model'), $updates);
 
         return $model->{$relation}($target->classname)
-                     ->where($class ? 'subject_id' : 'user_id', head($target->ids))
+                     ->where($class ? 'interactable_id' : 'user_id', head($target->ids))
                      ->exists();
     }
 

@@ -30,7 +30,7 @@ trait CanBeFavorited
      */
     public function favoriters()
     {
-        return $this->morphToMany(Interaction::getUserModelName(), 'subject',
+        return $this->morphToMany(Interaction::getUserModelName(), 'interactable',
             config('acquaintances.tables.interactions'))
                     ->wherePivot('relation', '=', Interaction::RELATION_FAVORITE)
                     ->withPivot(...Interaction::$pivotColumns)
